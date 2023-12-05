@@ -1,0 +1,54 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-dashboard-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /dashboard/app1/overview
+spec:
+  rules:
+    - host: patho.roche.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard-service
+                port:
+                  number: 80
+          - path: /login/
+            pathType: Prefix
+            backend:
+              service:
+                name: error-service
+                port:
+                  number: 80
+          - path: /charts/list
+            pathType: Prefix
+            backend:
+              service:
+                name: error-service
+                port:
+                  number: 80
+          - path: /dashboard/list
+            pathType: Prefix
+            backend:
+              service:
+                name: error-service
+                port:
+                  number: 80
+          - path: /users/list
+            pathType: Prefix
+            backend:
+              service:
+                name: error-service
+                port:
+                  number: 80
+          - path: /roles/list
+            pathType: Prefix
+            backend:
+              service:
+                name: error-service
+                port:
+                  number: 80
+Yes Yes 
