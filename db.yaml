@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oracle-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracle-db
+  template:
+    metadata:
+      labels:
+        app: oracle-db
+    spec:
+      containers:
+      - name: oracle-db
+        image: clearstream-docker-dev.cmqaart.deutsche-boerse.de/dba/cs.nostro_ddl_master:latest
+        ports:
+        - containerPort: 1521
