@@ -10,6 +10,7 @@ spec:
         echo "Hello, this is a sample file." > sample-file.txt
         ls -l
         pwd
+        cat sample-file.txt
     - name: list-files
       image: ubuntu:latest
       script: |
