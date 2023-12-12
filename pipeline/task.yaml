@@ -7,8 +7,8 @@ spec:
     - name: build
       image: ubuntu:latest
       script: |
-        echo "Hello, this is a sample file." > /workspace/filedrop/sample-file.txt
+        echo "Hello, this is a sample file." > sample-file.txt
     - name: list-files
       image: ubuntu:latest
       script: |
-        ls -l /workspace/filedrop
+        ls -l 
