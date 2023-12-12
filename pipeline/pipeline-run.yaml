@@ -5,7 +5,7 @@ metadata:
 spec:
   pipelineRef:
     name: ubuntu-build-pipeline
-  resources:
-    - name: filedrop
-      resourceRef:
-        name: my-git-repo  # Reference your Git resource here
+  # resources:
+  #   - name: filedrop
+  #     resourceRef:
+  #       name: my-git-repo  # Reference your Git resource here

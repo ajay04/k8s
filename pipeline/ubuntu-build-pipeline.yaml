@@ -7,13 +7,13 @@ spec:
     - name: build-task
       taskRef:
         name: ubuntu-build
-      resources:
-        inputs:
-          - name: source
-            resource: filedrop
-        outputs:
-          - name: output
-            resource: filedrop
-  resources:
-    - name: filedrop
-      type: git
+  #     resources:
+  #       inputs:
+  #         - name: source
+  #           resource: filedrop
+  #       outputs:
+  #         - name: output
+  #           resource: filedrop
+  # resources:
+  #   - name: filedrop
+  #     type: git
