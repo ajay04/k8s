@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: ubuntu-build-pipeline
+spec:
+  tasks:
+    - name: build-task
+      taskRef:
+        name: ubuntu-build
+      resources:
+        inputs:
+          - name: source
+            resource: filedrop
+        outputs:
+          - name: output
+            resource: filedrop
+  resources:
+    - name: filedrop
+      type: git

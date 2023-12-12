@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: ubuntu-build-pipeline-run-
+spec:
+  pipelineRef:
+    name: ubuntu-build-pipeline
+  resources:
+    - name: filedrop
+      resourceRef:
+        name: my-git-repo  # Reference your Git resource here
