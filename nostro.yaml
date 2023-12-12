@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oracle-db
+  name: nostro
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: oracle-db
+      app: nostro
   template:
     metadata:
       labels:
-        app: oracle-db
+        app: nostro
     spec:
       containers:
-      - name: oracle-db
-        image: clearstream-docker-dev.cmqaart.deutsche-boerse.de/dba/cs.nostro_ddl_master:latest
-        clearstream-docker-dev-local.cmqaart.deutsche-boerse.de/appl/nostro/nostro-be:0.0.1
+      - name: nostro
+        image: your/nostro-image:version
         env:
         - name: ORACLE_SID
-          value: NOSTRO
+          value: YOUR_ORACLE_SID
         - name: ORACLE_PDB
           value: YOUR_ORACLE_PDB
         - name: ORACLE_PWD
@@ -31,6 +30,6 @@ spec:
         - name: ORACLE_CHARACTERSET
           value: "AL32UTF8"
         - name: ORACLE_TOTAL_MEMORY
-          value: "4G"
+          value: "2G"
         ports:
         - containerPort: 1521

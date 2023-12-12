@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: ubuntu-build
+spec:
+  steps:
+    - name: build
+      image: ubuntu:latest
+      script: |
+        echo "Hello, this is a sample file." > /workspace/filedrop/sample-file.txt
+    - name: list-files
+      image: ubuntu:latest
+      script: |
+        ls -l /workspace/filedrop
