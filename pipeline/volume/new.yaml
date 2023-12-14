@@ -1,0 +1,21 @@
+spec:
+  params:
+    - name: CFGNAME
+      type: string
+      description: Name of config map
+    - name: volumeName
+      type: string
+      description: Name of volume
+  steps:
+    - image: ubuntu
+      script: |
+        #!/usr/bin/env bash
+        cat /var/configmap/test        
+      volumeMounts:
+        - name: "$(params.volumeName)"
+          mountPath: /var/configmap
+
+  volumes:
+    - name: "$(params.volumeName)"
+      configMap:
+        name: "$(params.CFGNAME)"
