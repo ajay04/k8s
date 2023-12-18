@@ -1,0 +1,26 @@
+FROM redhat/ubi8
+
+RUN dnf -y update && dnf -y install openssh-server sudo
+
+RUN useradd -m ajay && echo "ajay:akumawat" | chpasswd
+
+RUN echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+COPY id_rsa /etc/ssh/ssh_host_rsa_key
+RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ""
+RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
+
+# RUN echo "Subsystem sftp /usr/libexec/sftp-server" >> /etc/ssh/sshd_config
+
+RUN mkdir /var/run/sshd
+
+EXPOSE 22
+
+# USER ajay
+CMD ["/usr/sbin/sshd", "-D"]
+
+# build
+# docker build -f ./redhat-Dockerfile -t ajay365/redhat-sftp:v1 .
+
+# run
+# docker run -d -p 3336:22 ajay365/redhat-sftp:v1

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sftp-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sftp-server
+  template:
+    metadata:
+      labels:
+        app: sftp-server
+    spec:
+      containers:
+      - name: sftp-container
+        image: ajay365/redhat-sftp:v1
+        ports:
+        - containerPort: 22
+        # env:
+        # - name: SFTP_USER
+        #   value: sftp_user
+        # - name: SFTP_PASSWORD
+        #   value: SFTPUSERPASSWORDHERE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sftp-service
+spec:
+  selector:
+    app: sftp-server
+  ports:
+  - protocol: TCP
+    port: 2222
+    targetPort: 22
+  type: NodePort  # Change to NodePort or ClusterIP as needed
