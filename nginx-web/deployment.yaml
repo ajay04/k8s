@@ -16,6 +16,12 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.14.2
+        image: docker.io/nginx:1.14.2
         ports:
         - containerPort: 80
+
+        image: atmoz/sftp
+        securityContext:
+          capabilities:
+            add: ['SYS_ADMIN']
+          privileged: true
