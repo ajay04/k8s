@@ -1,0 +1,64 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: sftp-scc
+allowPrivilegedContainer: false
+runAsUser:
+  type: MustRunAs
+seLinuxContext:
+  type: MustRunAs
+fsGroup:
+  type: MustRunAs
+supplementalGroups:
+  type: MustRunAs
+readOnlyRootFilesystem: false
+defaultAddCapabilities: []
+requiredDropCapabilities:
+- KILL
+- MKNOD
+- SETUID
+- SETGID
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
+priority: null
+allowedCapabilities: null
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowedUnsafeSysctls:
+- net.*
+readOnlyPaths:
+- /proc/asound
+- /proc/acpi
+- /proc/kcore
+- /proc/keys
+- /proc/latency_stats
+- /proc/timer_stats
+- /proc/fs
+- /proc/irq
+- /proc/bus
+- /proc/sys
+- /proc/sysrq-trigger
+- /proc/irq
+- /proc/sys
+- /proc/sysrq-trigger
+- /proc/latency_stats
+- /proc/timer_stats
+- /proc/fs
+- /proc/irq
+- /proc/bus
+requiredReadOnlyPaths:
+- /proc/sys
+- /proc/sysrq-trigger
+- /proc/irq
+- /proc/bus
+requiredDropCapabilities:
+- MKNOD

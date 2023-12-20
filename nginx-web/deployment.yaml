@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -14,6 +14,9 @@ spec:
       labels:
         app: nginx
     spec:
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
       containers:
       - name: nginx
         image: docker.io/nginx:1.14.2
