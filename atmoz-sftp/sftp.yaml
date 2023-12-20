@@ -1,0 +1,143 @@
+#user config map
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-config
+data:
+  users.conf: demo:demodemo:1000:1000:data  // this will map to /home/demo/data
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sftp-host-keys
+stringData:
+  ssh_host_ed25519_key: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+    QyNTUxOQAAACDOVb+/U9crXeuhngA5ut2kSBb802t+1QiAtCxvxTAnNQAAAJimZwu6pmcL
+    ugAAAAtzc2gtZWQyNTUxOQAAACDOVb+/U9crXeuhngA5ut2kSBb802t+1QiAtCxvxTAnNQ
+    AAAEBoSNtR3ba700hua7koipdMXX153q36gN0VvsqQmqu5Es5Vv79T1ytd66GeADm63aRI
+    FvzTa37VCIC0LG/FMCc1AAAAEWFqYXlAYWpheS1rdW1hd2F0AQIDBA==
+    -----END OPENSSH PRIVATE KEY-----
+  ssh_host_ed25519_key.pub: |
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM5Vv79T1ytd66GeADm63aRIFvzTa37VCIC0LG/FMCc1 ajay@ajay-kumawat
+  ssh_host_rsa_key: |
+    ------BEGIN OPENSSH PRIVATE KEY-----
+    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
+    -----END OPENSSH PRIVATE KEY-----
+  ssh_host_rsa_key.pub: |
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbkp7V72Jl61zX26DHTGeUWSSOFA7Uh6enJhlU9j92MGY8H1NWhcggv8HSlgu2Soc9RL2pTXqESlmAnSTSjAvz9s1P/Y7hzoTc7EyUqAA7TQNdyIIpxgIX+xsUmQtMcqFA+SHHOqONLxj/K4yrfFyE/hq3Gbys2KnKO2CQHgWiY77F1QV9ICzNBlCr/AYngZSFUP/p2NwAbodeDpSjQhkWgKUNnTPj5N8m50LEvobxrHdjOIAQKytvHcAiqtH8uxGdhX7+D6Vg8Vbs1mvnyCFJYRhzW46u8iXGbbB/70pHCoKMTOqRYnzSOwOYWS4RnSenTOaj3639i2fyW43xkXg17P9NU5zeAxKungFRmVPUBcwfMNRtSKO7fSNf+aa2egzzOJlaGOWk6AGjn7MhcAeke1UqiCR9xvTjCdZxaO2fsb860PTNN+/PczxJIkc7UAYlexVThUPHmPWrzH8ZGw+tGfgGO1yQ/wNqXvoM0iTfylU2I5caMn6VPJvIJqPvmzk= ajay@ajay-kumawat
+type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sftp-pod
+  labels:
+    app: sftp-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sftp-pod
+  template:
+    metadata:
+      labels:
+        app: sftp-pod
+    spec:
+      containers:
+        - name: sftp-pod
+          image: atmoz/sftp:latest
+          volumeMounts:
+            # - name: sftp-volume
+            #   mountPath: /data
+
+            - name: config-volume
+              mountPath: /etc/sftp/
+              readOnly: true
+
+            - mountPath: /etc/ssh/ssh_host_ed25519_key
+              name: sftp-host-keys
+              subPath: ssh_host_ed25519_key
+              readOnly: true
+            - mountPath: /etc/ssh/ssh_host_ed25519_key.pub
+              name: sftp-host-keys
+              subPath: ssh_host_ed25519_key.pub
+              readOnly: true
+            - mountPath: /etc/ssh/ssh_host_rsa_key
+              name: sftp-host-keys
+              subPath: ssh_host_rsa_key
+              readOnly: true
+            - mountPath: /etc/ssh/ssh_host_rsa_key.pub
+              name: sftp-host-keys
+              subPath: ssh_host_rsa_key.pub
+              readOnly: true
+
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 22
+          securityContext:
+            capabilities:
+              add: ['SYS_ADMIN']
+            privileged: true  
+      volumes:
+        # - name: sftp-volume
+        #   persistentVolumeClaim:
+        #     claimName: data-nfs-server-nfs-server-provisioner-0
+        - name: config-volume
+          configMap:
+            name: user-config
+
+        - name: sftp-host-keys
+          secret:
+            secretName: sftp-host-keys
+            defaultMode: 0600
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sftp-service
+spec:
+  type: 'NodePort'
+  ports:
+    - name: 'ssh'
+      port: 22
+      targetPort: 22
+      nodePort: 31000
+  selector:
+    app: sftp-pod
