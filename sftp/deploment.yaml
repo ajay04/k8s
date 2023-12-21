@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: sftp-container
-        image: ajay365/redhat-sftp:v1
+        image: ajay365/sftp:v1
         ports:
-        - containerPort: 22
+        - containerPort: 2022
         # env:
         # - name: SFTP_USER
         #   value: sftp_user
@@ -33,5 +33,5 @@ spec:
   ports:
   - protocol: TCP
     port: 2222
-    targetPort: 22
+    targetPort: 2022
   type: NodePort  # Change to NodePort or ClusterIP as needed
