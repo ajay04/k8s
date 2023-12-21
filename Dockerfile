@@ -17,7 +17,7 @@ RUN mkdir -p /home/ajay/etc /home/ajay/var/run && \
 
 # Create privilege separation directory
 RUN mkdir -p /var/run/sshd
-
+USER ajay
 # Set up custom SSH configuration
 RUN sed -i 's/#Port 22/Port 2022/' /home/ajay/etc/sshd_config && \
     sed -i 's/#HostKey \/etc\/ssh\/ssh_host_rsa_key/HostKey \/home\/ajay\/etc\/ssh_host_rsa_key/' /home/ajay/etc/sshd_config && \
@@ -28,7 +28,7 @@ RUN sed -i 's/#Port 22/Port 2022/' /home/ajay/etc/sshd_config && \
 RUN ssh-keygen -t rsa -f /home/ajay/etc/ssh_host_rsa_key -N '' && \
     chown ajay:ajay /home/ajay/etc/ssh_host_rsa_key*
 
-USER ajay
+
 
 # Expose custom SSH port
 EXPOSE 2022
