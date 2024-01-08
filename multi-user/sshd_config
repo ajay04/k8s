@@ -1,0 +1,23 @@
+# Custom port for sshd
+Port 2022
+
+# Secure defaults
+Protocol 2
+
+# Faster connection
+UseDNS no
+
+# Limited access
+PermitRootLogin no
+X11Forwarding no
+AllowTcpForwarding no
+
+# Force sftp and chroot jail
+Subsystem sftp internal-sftp
+
+# Match block to chroot specific users to /ajaybin/ajay/data/ajay
+Match User user1,user2,user3
+    ChrootDirectory /ajaybin/ajay/data
+    AllowTCPForwarding no
+    X11Forwarding no
+    ForceCommand internal-sftp -d /ajay
