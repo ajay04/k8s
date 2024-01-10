@@ -15,8 +15,11 @@ spec:
       containers:
       - name: redhat-sftp-container
         image: ajay365/redhat-sftp:v9
+        securityContext:
+          runAsNonRoot: true
         ports:
         - containerPort: 2022
+        command: ["/usr/sbin/sshd", "-f", "/home/ajay/etc/sshd_config", "-D"]
         # env:
         # - name: SFTP_USER
         #   value: sftp_user
@@ -35,4 +38,3 @@ spec:
     port: 2222
     targetPort: 2022
   type: NodePort  # Change to NodePort or ClusterIP as needed
-a

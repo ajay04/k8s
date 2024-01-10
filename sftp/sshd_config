@@ -19,9 +19,9 @@ Port 2022
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 
-HostKey home/ajay/etc/ssh_host_rsa_key
-HostKey home/ajay/etc/ssh_host_ecdsa_key
-HostKey home/ajay/etc/ssh_host_ed25519_key
+; HostKey home/ajay/etc/ssh_host_rsa_key
+; HostKey home/ajay/etc/ssh_host_ecdsa_key
+; HostKey home/ajay/etc/ssh_host_ed25519_key
 
 # Ciphers and keying
 #RekeyLimit default none

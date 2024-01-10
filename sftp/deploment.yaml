@@ -15,6 +15,22 @@ spec:
       containers:
       - name: sftp-container
         image: ajay365/sftp:v2
+        securityContext:
+          runAsNonRoot: true
+          # allowPrivilegeEscalation: true
+          # capabilities:
+          #   add:
+          #   - CHOWN
+          #   - DAC_OVERRIDE
+          #   - DAC_READ_SEARCH
+          #   - FSETID
+          #   - FOWNER
+          #   - MKNOD
+          #   - NET_BIND_SERVICE
+          #   - SETGID
+          #   - SETUID
+          #   - SYS_CHROOT
+          #   - SYS_ADMIN
         ports:
         - containerPort: 2022
         # env:

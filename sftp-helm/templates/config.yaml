@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  sshd_config: |
+    # Custom port for sshd
+    Port 2022
+    # Secure defaults
+    Protocol 2
+
+    # Faster connection
+    UseDNS no
+
+    # Limited access
+    PermitRootLogin no
+    AuthorizedKeysFile	.ssh/authorized_keys
+    X11Forwarding no
+    AllowTcpForwarding no
+    PidFile /ext1/sshd.pid
+    # Force sftp and chroot jail
+    Subsystem sftp internal-sftp
+
+    # Match block to chroot specific users to /ajaybin/ajay/data/ajay
+    # Match User ajay,user2,user3
+    #     ChrootDirectory /ajaybin/ajay/data
+    #     AllowTCPForwarding no
+    #     X11Forwarding no
+    #     ForceCommand internal-sftp -d /ajay
+
+  ssh_host_ed25519_key: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+    QyNTUxOQAAACAH8xP3UceQzwRhDBP7b6Keg//W00yEb8g4bi0ganrrdAAAAJgeuVKiHrlS
+    ogAAAAtzc2gtZWQyNTUxOQAAACAH8xP3UceQzwRhDBP7b6Keg//W00yEb8g4bi0ganrrdA
+    AAAEBXjATm9hLJpSSdlWWl8aF4ORUKY6STvk+yAPc7DhUfXwfzE/dRx5DPBGEME/tvop6D
+    /9bTTIRvyDhuLSBqeut0AAAAEWFqYXlAYWpheS1rdW1hd2F0AQIDBA==
+    -----END OPENSSH PRIVATE KEY-----
+
+  ssh_host_rsa_key: |
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1fptB+88wCwzfYF3X3dE7ph3SgPcWDWi5A6sN6F5kU5yQBFDbTYxogWBzZdEWBz3EQNgi3sPkrgb5I0mBy80qC0Y3onkBBNag9+nf28tinULojHnHBMHT8UpgBNkyW81JbysmstU2F9FxaXp9RCjT6fCaIeMxgWDh92NeOjQsYHz+Pa7LSzCSO/BOOP8bXLZAjnX85bCMCb4pOA79Nyk5TGaBx4J04J0HanpYsi6wN55A/narhOiHyUEwKdUujnnyZTDe4lvp7BC5zBWSauEFwLovvMh2wcMFauLD0jO8BQtVTEB7a4WcJzCwskYCZdCbof4gBsh85RWWpI/fBVrI0V+PMbTev+fSfbpp5A33vHGvjVKi8IQZ8BQltaR4xwHUGuvtkyC5h2dQgTZuVSf437XICGvSrzXiaJUGsyiHwm2YjQi74y9/OpRN/JY5wdhbuEZ2NFvZnm/lLKXWuBD3nfiPT5lwDJmDF98j0QwMDqFRYy0RcgXtVfavviW93lnuKEZfw6kotfjQnnJDnF9mP1CDik5OMXqGHq1oRboERYTwxZ2lYX+GTlfzTL8koDH+DKN5cDbwqJLiyQcecQl+0wHsrRsnG8LMRYlYZl3a/itiz3DXhE4mSxMr1buF0Wk4U4135RaWPZgRsv31yU/Sebbg+mZsDZ2i3Zrp5/S9MQ== ajay@ajay-kumawat
+
+
+

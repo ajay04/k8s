@@ -1,0 +1,100 @@
+#user config map
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-config
+data:
+  users.conf: demo:demodemo:1000:1000:data  // this will map to /home/demo/data
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sftp-host-keys
+stringData:
+  ssh_host_ed25519_key: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    ....
+    -----END OPENSSH PRIVATE KEY-----
+  ssh_host_ed25519_key.pub: |
+    ssh-ed25519 AAAAC3....
+  ssh_host_rsa_key: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    .....
+    -----END OPENSSH PRIVATE KEY-----
+  ssh_host_rsa_key.pub: |
+    ssh-rsa AAAAB3.......
+type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sftp-pod
+  labels:
+    app: sftp-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sftp-pod
+  template:
+    metadata:
+      labels:
+        app: sftp-pod
+    spec:
+      containers:
+        - name: sftp-pod
+          image: atmoz/sftp:latest
+          volumeMounts:
+            - name: sftp-volume
+              mountPath: /data
+
+            - name: config-volume
+              mountPath: /etc/sftp/
+              readOnly: true
+
+            - mountPath: /etc/ssh/ssh_host_ed25519_key
+              name: sftp-host-keys
+              subPath: ssh_host_ed25519_key
+              readOnly: true
+            - mountPath: /etc/ssh/ssh_host_ed25519_key.pub
+              name: sftp-host-keys
+              subPath: ssh_host_ed25519_key.pub
+              readOnly: true
+            - mountPath: /etc/ssh/ssh_host_rsa_key
+              name: sftp-host-keys
+              subPath: ssh_host_rsa_key
+              readOnly: true
+            - mountPath: /etc/ssh/ssh_host_rsa_key.pub
+              name: sftp-host-keys
+              subPath: ssh_host_rsa_key.pub
+              readOnly: true
+
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 22 
+      volumes:
+        - name: sftp-volume
+          persistentVolumeClaim:
+            claimName: data-nfs-server-nfs-server-provisioner-0
+        - name: config-volume
+          configMap:
+            name: user-config
+
+        - name: sftp-host-keys
+          secret:
+            secretName: sftp-host-keys
+            defaultMode: 0600
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sftp-service
+spec:
+  type: 'NodePort'
+  ports:
+    - name: 'ssh'
+      port: 22
+      targetPort: 22
+      nodePort: 31000
+  selector:
+    app: sftp-pod

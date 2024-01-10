@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redhat-sftp-server1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redhat-sftp-server1
+  template:
+    metadata:
+      labels:
+        app: redhat-sftp-server1
+    spec:
+      volumes:
+      - name: ssh-host-keys
+        emptyDir: {}
+      - name: sshd-config-volume
+        configMap:
+          name: my-configmap
+          items:
+          - key: sshd_config
+            path: sshd_config
+          - key: ssh_host_ed25519_key
+            path: ssh_host_ed25519_key
+          - key: ssh_host_rsa_key
+            path: ssh_host_rsa_key
+      - name: sshd-config-rsa-key
+        configMap:
+          name: my-configmap1
+          items:
+          - key: ssh_host_rsa_key
+            path: ssh_host_rsa_key
+      # initContainers:
+      # - name: init-ssh-keys
+      #   image: ajay365/redhat-sftp:v9
+      #   command:
+      #   - ssh-keygen
+      #   - -A
+      #   - -f
+      #   - /ext/ssh
+      #   volumeMounts:
+      #   - name: ssh-host-keys
+      #     mountPath: /ext/ssh
+      containers:
+      - name: redhat-sftp-container
+        image: ajay365/redhat-sftp:v12
+        volumeMounts:
+        - name: sshd-config-volume
+          mountPath: /ext
+        - name: ssh-host-keys
+          mountPath: /ext1
+        - name: sshd-config-rsa-key
+          mountPath: /ext/ssh
+        securityContext:
+          runAsNonRoot: true
+        ports:
+        - containerPort: 2022
+        command: ["/usr/sbin/sshd", "-f", "/ext/sshd_config", "-e", "-D", "-h", "/ext/ssh/ssh_host_rsa_key" ]
+        # command: [ "sh", "-c", "sleep 1h" ]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redhat-sftp-service1
+spec:
+  selector:
+    app: redhat-sftp-server1
+  ports:
+  - protocol: TCP
+    port: 2222
+    targetPort: 2022
+  type: NodePort  # Change to NodePort or ClusterIP as needed
