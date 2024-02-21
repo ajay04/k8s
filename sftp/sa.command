@@ -22,11 +22,7 @@ oc adm policy add-scc-to-user anyuid -z default scc “anyuid” added to: [“s
 
 
 docker run \
-    -v ./ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key \
-    -v ./ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key \
-    -v ./ssh_host_ed25519_key.pub:/home/foo/.ssh/keys/ssh_host_ed25519_key.pub:ro \
-    -v ./ssh_host_rsa_key.pub:/home/foo/.ssh/keys/ssh_host_rsa_key.pub:ro \
-    -v ./authorized_keys:/home/foo/.ssh/authorized_keys:ro \
+    -v ./.ssh/id_rsa.pub:/home/foo/.ssh/authorized_keys:ro \
     -v ./share:/home/foo \
     -p 9000:22 -d atmoz/sftp \
     foo::1001
@@ -34,8 +30,8 @@ docker run \
     docker run \
     -v ./ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key \
     -v ./ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key \
-    -v ./ssh_host_ed25519_key.pub:/home/foo/.ssh/keys/ssh_host_ed25519_key.pub:ro \
-    -v ./ssh_host_rsa_key.pub:/home/foo/.ssh/keys/ssh_host_rsa_key.pub:ro \
+    -v ./ssh_host_ed25519_key.pub:/home/foo/.ssh/ssh_host_ed25519_key.pub:ro \
+    -v ./ssh_host_rsa_key.pub:/home/foo/.ssh/ssh_host_rsa_key.pub:ro \
     -v ./authorized_keys:/home/foo/.ssh/authorized_keys:ro \
     -p 9000:22 -d atmoz/sftp \
     foo::1001
@@ -43,8 +39,8 @@ docker run \
     docker run \
     -v ./ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key \
     -v ./ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key \
-    -v ./ssh_host_ed25519_key.pub:/home/foo/.ssh/keys/ssh_host_ed25519_key.pub:ro \
-    -v ./ssh_host_rsa_key.pub:/home/foo/.ssh/keys/ssh_host_rsa_key.pub:ro \
+    -v ./ssh_host_ed25519_key.pub:/home/foo/.ssh/ssh_host_ed25519_key.pub:ro \
+    -v ./ssh_host_rsa_key.pub:/home/foo/.ssh/ssh_host_rsa_key.pub:ro \
     -v ./share:/home/foo \
     -p 9000:22 -d atmoz/sftp \
     foo::1001
@@ -63,8 +59,9 @@ docker run \
 
 
    docker run \
-  -p 22:22 \
-  -t \
-  atmoz/sftp \
+  -p 22:22 -t -v ./data:/etc/ssh/ atmoz/sftp \
   user1:password1::1001 \
   user2:password2::1002
+
+
+https://stackoverflow.com/questions/73365727/mounting-a-configmap-as-a-volume-in-kubernetes-how-do-i-calculate-the-value-of
